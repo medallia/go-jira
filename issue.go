@@ -102,9 +102,9 @@ type IssueFields struct {
 	Attachments       []*Attachment `json:"attachment,omitempty" structs:"attachment,omitempty"`
 	Epic              *Epic         `json:"epic,omitempty" structs:"epic,omitempty"`
 	Unknowns          tcontainer.MarshalMap
-	DueDate           string `json:"duedate,omitempty"`
-	Justification     string `json:"customfield_10218,omitempty"`
-	RollbackPlan      string `json:"customfield_10220,omitempty"`
+	DueDate           string `json:"duedate,omitempty" structs:"duedate,omitempty"`
+	Justification     string `json:"customfield_10218,omitempty" structs:"customfield_10218,omitempty"`
+	RollbackPlan      string `json:"customfield_10220,omitempty" structs:"customfield_10220,omitempty"`
 }
 
 // MarshalJSON is a custom JSON marshal function for the IssueFields structs.
