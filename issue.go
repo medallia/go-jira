@@ -529,6 +529,32 @@ func (s *IssueService) Create(issue *Issue) (*Issue, *Response, error) {
 	return responseIssue, resp, nil
 }
 
+// UPDATE
+func (s *IssueService) Update(issue *Issue) (*Issue, *Response, error) {
+	apiEndpoint := "rest/api/2/issue/"
+	req, err := s.client.NewRequest("PUT", apiEndpoint, issue)
+	if err != nil {
+		return nil, nil, err
+	}
+	resp, err := s.client.Do(req, nil)
+	if err != nil {
+		// incase of error return the resp for further inspection
+		return nil, resp, err
+	}
+
+	responseIssue := new(Issue)
+	defer resp.Body.Close()
+	data, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, resp, fmt.Errorf("Could not read the returned data")
+	}
+	err = json.Unmarshal(data, responseIssue)
+	if err != nil {
+		return nil, resp, fmt.Errorf("Could not unmarshall the data into struct")
+	}
+	return responseIssue, resp, nil
+}
+
 // AddComment adds a new comment to issueID.
 //
 // JIRA API docs: https://docs.atlassian.com/jira/REST/latest/#api/2/issue-addComment
